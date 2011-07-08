@@ -440,8 +440,16 @@ public class ColorPickerThreshold extends PainterManagerSingletonPlugin<ColorPic
 		public ColorPickerThresholdPainter() {
 			super();
 
+			System.err.println(" -- ColorPickerThresholdPainter created");
+			
 			setMask(null);
 			setSequence(null);
+		}
+		
+		@Override
+		protected void finalize() throws Throwable {
+			System.err.println(" -- ColorPickerThresholdPainter finalized");
+			super.finalize();
 		}
 
 		/*
@@ -808,6 +816,12 @@ public class ColorPickerThreshold extends PainterManagerSingletonPlugin<ColorPic
 	 */
 	public ColorPickerThreshold() {
 		super();
+	}
+	
+	@Override
+	protected void finalize() throws Throwable {
+		System.err.println(" ------ ColorPickerThreshold finalized ------");
+		super.finalize();
 	}
 
 	/*
@@ -1440,7 +1454,6 @@ public class ColorPickerThreshold extends PainterManagerSingletonPlugin<ColorPic
 	 */
 	@Override
 	public void stopInterface() {
-		removePainterFromAllSequences();
 	}
 
 }
