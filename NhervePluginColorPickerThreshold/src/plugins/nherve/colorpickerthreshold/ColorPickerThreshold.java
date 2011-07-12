@@ -22,6 +22,7 @@ import icy.canvas.IcyCanvas;
 import icy.gui.component.ComponentUtil;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
+import icy.gui.util.WindowPositionSaver;
 import icy.image.IcyBufferedImage;
 import icy.main.Icy;
 import icy.painter.Painter;
@@ -1262,6 +1263,8 @@ public class ColorPickerThreshold extends PainterManagerSingletonPlugin<ColorPic
 		mainPanel = GuiUtil.generatePanel();
 		frame = GuiUtil.generateTitleFrame(FULL_PLUGIN_NAME, mainPanel, new Dimension(WINDOW_WIDTH, TITLE_HEIGHT), false, true, false, true);
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+		
+		new WindowPositionSaver(frame, getPreferences().absolutePath(), new Point(0, 0));
 
 		// KNN
 		ButtonGroup bgd = new ButtonGroup();
