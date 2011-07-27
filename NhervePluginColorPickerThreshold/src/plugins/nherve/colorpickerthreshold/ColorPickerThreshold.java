@@ -20,9 +20,7 @@ package plugins.nherve.colorpickerthreshold;
 
 import icy.canvas.IcyCanvas;
 import icy.gui.component.ComponentUtil;
-import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
-import icy.gui.util.WindowPositionSaver;
 import icy.image.IcyBufferedImage;
 import icy.main.Icy;
 import icy.painter.Painter;
@@ -48,7 +46,6 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -683,19 +680,6 @@ public class ColorPickerThreshold extends PainterManagerSingletonPlugin<ColorPic
 	/** The Constant COL_GRID_MAXCOLORS. */
 	private final static int COL_GRID_MAXCOLORS = COL_GRID_HEIGHT * COL_GRID_WIDTH;
 
-	/** The Constant PLUGIN_NAME. */
-	private final static String PLUGIN_NAME = "ColorPickerThreshold";
-
-	/** The Constant PLUGIN_VERSION. */
-	private final static String PLUGIN_VERSION = "1.0.0";
-
-	/** The Constant FULL_PLUGIN_NAME. */
-	private final static String FULL_PLUGIN_NAME = PLUGIN_NAME + " V" + PLUGIN_VERSION;
-
-	private final static int WINDOW_WIDTH = 350;
-	private final static int WINDOW_HEIGHT = 300;
-	private final static int TITLE_HEIGHT = 100;
-
 	/** The Constant METHOD_1. */
 	private final static String METHOD_1 = "KNN";
 
@@ -735,14 +719,8 @@ public class ColorPickerThreshold extends PainterManagerSingletonPlugin<ColorPic
 	/** The m2 neg color box. */
 	private ColorBox m2NegColorBox;
 
-	/** The frame. */
-	private IcyFrame frame;
-
 	/** The lb current. */
 	private JLabel lbCurrent;
-
-	/** The main panel. */
-	private JPanel mainPanel;
 
 	/** The rb rgb. */
 	private JRadioButton rbRGB;
@@ -891,7 +869,7 @@ public class ColorPickerThreshold extends PainterManagerSingletonPlugin<ColorPic
 						Mask m = doFilter(getCurrentSequencePainter());
 						if (m != null) {
 							ROI2DArea a = m.asROI2DArea(currentSequence);
-							a.setName("From " + PLUGIN_NAME);
+							a.setName("From " + getName());
 						}
 					} catch (SignatureException e1) {
 						System.err.println(e1.getClass().getName() + " : " + e1.getMessage());
@@ -979,10 +957,10 @@ public class ColorPickerThreshold extends PainterManagerSingletonPlugin<ColorPic
 		try {
 			if (comp == 0) {
 				m = filter1(m1ColorBox, currentImage);
-				m.setLabel(PLUGIN_NAME + " " + METHOD_1);
+				m.setLabel(getName() + " " + METHOD_1);
 			} else if (comp == 1) {
 				m = filter2(m2PosColorBox, m2NegColorBox, currentImage);
-				m.setLabel(PLUGIN_NAME + " " + METHOD_2);
+				m.setLabel(getName() + " " + METHOD_2);
 			}
 		} catch (MaskException e) {
 			// ignore
@@ -1202,20 +1180,20 @@ public class ColorPickerThreshold extends PainterManagerSingletonPlugin<ColorPic
 	public void sequenceHasChangedAfterSettingPainter() {
 		if (hasCurrentSequence()) {
 			Sequence currentSequence = getCurrentSequence();
-			frame.setTitle(PLUGIN_NAME + " - " + currentSequence.getName());
+			setTitle(getName() + " - " + currentSequence.getName());
 			btFilter.setEnabled(true);
 			btKeepMask.setEnabled(true);
 			btAsROI.setEnabled(true);
 			btCancelFilter.setEnabled(true);
 		} else {
-			frame.setTitle(PLUGIN_NAME);
+			setTitle(getName());
 			btFilter.setEnabled(false);
 			btKeepMask.setEnabled(false);
 			btAsROI.setEnabled(false);
 			btCancelFilter.setEnabled(false);
 		}
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -1253,19 +1231,13 @@ public class ColorPickerThreshold extends PainterManagerSingletonPlugin<ColorPic
 		colDefaultDist = (int) Math.ceil((double) colMaxDist / 10.0);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see plugins.nherve.toolbox.plugin.SingletonPlugin#startInterface()
-	 */
 	@Override
-	public void startInterface() {
-		mainPanel = GuiUtil.generatePanel();
-		frame = GuiUtil.generateTitleFrame(FULL_PLUGIN_NAME, mainPanel, new Dimension(WINDOW_WIDTH, TITLE_HEIGHT), false, true, false, true);
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
-		
-		new WindowPositionSaver(frame, getPreferences().absolutePath(), new Point(0, 0));
-
+	public Dimension getDefaultFrameDimension() {
+		return null;
+	}
+	
+	@Override
+	public void fillInterface(JPanel mainPanel) {
 		// KNN
 		ButtonGroup bgd = new ButtonGroup();
 		rbL1 = new JRadioButton("L1");
@@ -1394,16 +1366,6 @@ public class ColorPickerThreshold extends PainterManagerSingletonPlugin<ColorPic
 
 		mainPanel.add(tabbedPane);
 		mainPanel.add(notTabbed);
-
-		// ---
-
-		frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-		frame.addFrameListener(this);
-		frame.setVisible(true);
-		frame.pack();
-		addIcyFrame(frame);
-
-		frame.requestFocus();
 	}
 
 	/*
