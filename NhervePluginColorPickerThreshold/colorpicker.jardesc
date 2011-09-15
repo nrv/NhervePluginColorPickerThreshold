@@ -12,6 +12,7 @@
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="true" exportOutputFolder="false">
         <javaElement handleIdentifier="=NhervePluginColorPickerThreshold/src"/>
+        <file path="/NhervePluginColorPickerThreshold/Manifest.MF"/>
         <file path="/NhervePluginColorPickerThreshold/COPYING"/>
     </selectedElements>
 </jardesc>
