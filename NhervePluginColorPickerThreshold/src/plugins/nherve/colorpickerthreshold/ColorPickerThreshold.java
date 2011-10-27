@@ -58,6 +58,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import plugins.nherve.toolbox.Algorithm;
 import plugins.nherve.toolbox.NherveToolbox;
 import plugins.nherve.toolbox.image.BinaryIcyBufferedImage;
 import plugins.nherve.toolbox.image.feature.ColorDistance;
@@ -480,7 +481,7 @@ public class ColorPickerThreshold extends PainterManagerSingletonPlugin<ColorPic
 				try {
 					doFilter(this);
 				} catch (SignatureException e1) {
-					System.err.println(e1.getClass().getName() + " : " + e1.getMessage());
+					Algorithm.err(e1);
 				}
 			}
 		}
@@ -578,7 +579,7 @@ public class ColorPickerThreshold extends PainterManagerSingletonPlugin<ColorPic
 				}
 
 			} catch (SignatureException ex) {
-				System.err.println(ex.getClass().getName() + " : " + ex.getMessage());
+				Algorithm.err(ex);
 			}
 
 		}
@@ -814,7 +815,7 @@ public class ColorPickerThreshold extends PainterManagerSingletonPlugin<ColorPic
 					try {
 						doFilter(getCurrentSequencePainter());
 					} catch (SignatureException e1) {
-						System.err.println(e1.getClass().getName() + " : " + e1.getMessage());
+						Algorithm.err(e1);
 					}
 				}
 
@@ -855,7 +856,7 @@ public class ColorPickerThreshold extends PainterManagerSingletonPlugin<ColorPic
 							Icy.getMainInterface().getSwimmingPool().add(result);
 						}
 					} catch (SignatureException e1) {
-						System.err.println(e1.getClass().getName() + " : " + e1.getMessage());
+						Algorithm.err(e1);
 					}
 					currentSequence.dataChanged();
 				}
@@ -872,7 +873,7 @@ public class ColorPickerThreshold extends PainterManagerSingletonPlugin<ColorPic
 							a.setName("From " + getName());
 						}
 					} catch (SignatureException e1) {
-						System.err.println(e1.getClass().getName() + " : " + e1.getMessage());
+						Algorithm.err(e1);
 					}
 					currentSequence.dataChanged();
 				}
@@ -913,7 +914,7 @@ public class ColorPickerThreshold extends PainterManagerSingletonPlugin<ColorPic
 				try {
 					doFilter(getCurrentSequencePainter());
 				} catch (SignatureException e1) {
-					System.err.println(e1.getClass().getName() + " : " + e1.getMessage());
+					Algorithm.err(e1);
 				}
 			}
 		}
@@ -935,7 +936,7 @@ public class ColorPickerThreshold extends PainterManagerSingletonPlugin<ColorPic
 		try {
 			doFilter(painter);
 		} catch (SignatureException e1) {
-			System.err.println(e1.getClass().getName() + " : " + e1.getMessage());
+			Algorithm.err(e1);
 		}
 		return painter;
 	}
