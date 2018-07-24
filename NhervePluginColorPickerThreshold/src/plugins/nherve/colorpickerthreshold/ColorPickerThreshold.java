@@ -69,6 +69,7 @@ import plugins.nherve.toolbox.image.feature.SegmentableIcyBufferedImage;
 import plugins.nherve.toolbox.image.feature.descriptor.ColorPixel;
 import plugins.nherve.toolbox.image.feature.learning.SVMClassifier;
 import plugins.nherve.toolbox.image.feature.region.IcyPixel;
+import plugins.nherve.toolbox.image.feature.signature.DefaultVectorSignature;
 import plugins.nherve.toolbox.image.feature.signature.DenseVectorSignature;
 import plugins.nherve.toolbox.image.feature.signature.SignatureException;
 import plugins.nherve.toolbox.image.feature.signature.VectorSignature;
@@ -1059,8 +1060,8 @@ public class ColorPickerThreshold extends PainterManagerSingletonPlugin<ColorPic
 
 		// Raster raster = image.getRaster();
 
-		VectorSignature[] pos = new VectorSignature[boxP.nbColors];
-		VectorSignature[] neg = new VectorSignature[boxN.nbColors];
+		DefaultVectorSignature[] pos = new DefaultVectorSignature[boxP.nbColors];
+		DefaultVectorSignature[] neg = new DefaultVectorSignature[boxN.nbColors];
 
 		for (int i = 0; i < boxP.nbColors; i++) {
 			double[] ddd = ColorSpaceTools.getColorComponentsD_0_1(choosenCS, boxP.colors[i].getRed(), boxP.colors[i].getGreen(), boxP.colors[i].getBlue());
@@ -1107,7 +1108,7 @@ public class ColorPickerThreshold extends PainterManagerSingletonPlugin<ColorPic
 		for (int y = 0; y < image.getHeight(); y++) {
 			for (int x = 0; x < image.getWidth(); x++) {
 				IcyPixel pix = new IcyPixel(x, y);
-				VectorSignature vs = (VectorSignature) col.extractLocalSignature(simg, pix);
+				DefaultVectorSignature vs = (DefaultVectorSignature) col.extractLocalSignature(simg, pix);
 				if (svm.predict(vs) > 0) {
 					raw[idx] = BinaryIcyBufferedImage.TRUE;
 				}
